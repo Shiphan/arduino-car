@@ -1,4 +1,4 @@
-app:
+app: arduino.ino
 	arduino-cli compile
 run: app
 	arduino-cli upload
