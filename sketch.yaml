@@ -1,2 +1,2 @@
 default_fqbn: arduino:avr:uno
-default_port: /dev/ttyACM0
+default_port: /dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_14101-if00
