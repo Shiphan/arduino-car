@@ -36,7 +36,6 @@ void setup() {
 
 void loop() {
   // test_simple_track();
-  // test_if_near(20);
   avoid_near_stuff();
   test_complex_track();
 }
@@ -177,74 +176,84 @@ void test_complex_track() {
   bool left = sensor_is_black(Sensor::Left);
   bool near = is_near_cm(10);
 
+  // FIXME: sometimes it will stop and idk why, maybe motor speed is too low?
   if (middle) {
     if (left && !right) {
       motor_speed(Motor::Left, 0);
-      motor_speed(Motor::Right, 120);
-      delay(45);
+      motor_speed(Motor::Right, 75);
+      delay(35);
     } else if (!left && right) {
-      motor_speed(Motor::Left, 120);
+      motor_speed(Motor::Left, 75);
       motor_speed(Motor::Right, 0);
-      delay(45);
+      delay(35);
     } else if (!left && !right) {
-      motor_speed(Motor::Left, 100);
-      delay(45);
+      motor_speed(75);
+      delay(35);
     } else {  // all black
       if (state.left && !state.right) {
         motor_direction(Direction::Backward);
-        motor_speed(Motor::Left, 105);
-        motor_speed(Motor::Right, 90);
-        delay(40);
+        motor_speed(Motor::Left, 85);
+        motor_speed(Motor::Right, 75);
+        delay(30);
         motor_direction(Direction::Forward);
       } else if (!state.left && state.right) {
         motor_direction(Direction::Backward);
-        motor_speed(Motor::Left, 90);
-        motor_speed(Motor::Right, 105);
-        delay(40);
+        motor_speed(Motor::Left, 75);
+        motor_speed(Motor::Right, 85);
+        delay(30);
         motor_direction(Direction::Forward);
       } else {
         motor_direction(Direction::Backward);
-        motor_speed(100);
-        delay(35);
+        motor_speed(85);
+        delay(30);
         motor_direction(Direction::Forward);
       }
     }
   } else if (left || right) {
-    // TODO: maybe use backward?
     if (left && !right) {
       motor_speed(Motor::Left, 0);
-      motor_speed(Motor::Right, 110);
-      delay(40);
+      motor_speed(Motor::Right, 75);
+      delay(35);
     } else if (!left && right) {
-      motor_speed(Motor::Left, 110);
+      motor_speed(Motor::Left, 75);
       motor_speed(Motor::Right, 0);
-      delay(40);
+      delay(35);
+    } else {
+      motor_direction(Direction::Backward);
+      motor_speed(75);
+      delay(35);
+      motor_direction(Direction::Forward);
     }
   } else {
+    // FIXME: check if time duration check is needed
     digitalWrite(LED_BUILTIN, HIGH);
     if (state.last_middle > state.last_left && state.last_middle > state.last_right) {
-      motor_speed(110);
+      // if (
+      //   state.last_middle > state.last_left
+      //   && state.last_middle > state.last_right
+      //   && min(state.last_middle - state.last_left, state.last_middle - state.last_right) > 150) {  // > 0.15s
+      motor_speed(75);
       delay(30);
     } else if (state.last_left > state.last_right) {
+      // } else if (state.last_left > state.last_right && state.last_left - state.last_right > 0) {
       motor_direction(Direction::Backward);
-      motor_speed(Motor::Left, 105);
-      motor_speed(Motor::Right, 90);
-      delay(40);
+      motor_speed(Motor::Left, 80);
+      motor_speed(Motor::Right, 75);
+      delay(35);
+      motor_direction(Direction::Forward);
+    } else if (state.last_left < state.last_right) {
+      // } else if (state.last_left < state.last_right && state.last_right - state.last_left > 0) {
+      motor_direction(Direction::Backward);
+      motor_speed(Motor::Left, 75);
+      motor_speed(Motor::Right, 80);
+      delay(35);
       motor_direction(Direction::Forward);
     } else {
       motor_direction(Direction::Backward);
-      motor_speed(Motor::Left, 90);
-      motor_speed(Motor::Right, 105);
-      delay(40);
+      motor_speed(75);
+      delay(35);
       motor_direction(Direction::Forward);
     }
-    // } else {
-    //   // TODO: make sure this works
-    //   motor_direction(Direction::Backward);
-    //   motor_speed(120);
-    //   delay(40);
-    //   motor_direction(Direction::Forward);
-    // }
     digitalWrite(LED_BUILTIN, LOW);
   }
 
@@ -270,11 +279,11 @@ void avoid_near_stuff() {
   }
   digitalWrite(LED_BUILTIN, HIGH);
   motor_speed(Motor::Left, 0);
-  motor_speed(Motor::Right, 110);
-  delay(450);
-  motor_speed(Motor::Left, 130);
-  motor_speed(Motor::Right, 90);
-  delay(1400);
+  motor_speed(Motor::Right, 100);
+  delay(280);
+  motor_speed(Motor::Left, 105);
+  motor_speed(Motor::Right, 80);
+  delay(1250);
   digitalWrite(LED_BUILTIN, LOW);
 
   state.last_middle = millis();
