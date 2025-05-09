@@ -1,4 +1,4 @@
-app: arduino.ino
+app: arduino-car.ino
 	arduino-cli compile
 run: app
 	arduino-cli upload
