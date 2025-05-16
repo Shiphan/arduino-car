@@ -176,30 +176,29 @@ void task_complex_track() {
   bool left = sensor_is_black(Sensor::Left);
   bool near = is_near_cm(10);
 
-  // FIXME: sometimes it will stop and idk why, maybe motor speed is too low?
   if (middle) {
     if (left && !right) {
       motor_speed(Motor::Left, 0);
-      motor_speed(Motor::Right, 75);
+      motor_speed(Motor::Right, 90);
       delay(35);
     } else if (!left && right) {
-      motor_speed(Motor::Left, 75);
+      motor_speed(Motor::Left, 90);
       motor_speed(Motor::Right, 0);
       delay(35);
     } else if (!left && !right) {
-      motor_speed(75);
+      motor_speed(85);
       delay(35);
     } else {  // all black
       if (state.left && !state.right) {
         motor_direction(Direction::Backward);
-        motor_speed(Motor::Left, 85);
-        motor_speed(Motor::Right, 75);
+        motor_speed(Motor::Left, 90);
+        motor_speed(Motor::Right, 80);
         delay(30);
         motor_direction(Direction::Forward);
       } else if (!state.left && state.right) {
         motor_direction(Direction::Backward);
-        motor_speed(Motor::Left, 75);
-        motor_speed(Motor::Right, 85);
+        motor_speed(Motor::Left, 80);
+        motor_speed(Motor::Right, 90);
         delay(30);
         motor_direction(Direction::Forward);
       } else {
@@ -212,45 +211,45 @@ void task_complex_track() {
   } else if (left || right) {
     if (left && !right) {
       motor_speed(Motor::Left, 0);
-      motor_speed(Motor::Right, 75);
+      motor_speed(Motor::Right, 85);
       delay(35);
     } else if (!left && right) {
-      motor_speed(Motor::Left, 75);
+      motor_speed(Motor::Left, 85);
       motor_speed(Motor::Right, 0);
       delay(35);
     } else {
       motor_direction(Direction::Backward);
-      motor_speed(75);
+      motor_speed(85);
       delay(35);
       motor_direction(Direction::Forward);
     }
   } else {
-    // FIXME: check if time duration check is needed
+    // TODO: check if time duration check is needed
     digitalWrite(LED_BUILTIN, HIGH);
     if (state.last_middle > state.last_left && state.last_middle > state.last_right) {
       // if (
       //   state.last_middle > state.last_left
       //   && state.last_middle > state.last_right
       //   && min(state.last_middle - state.last_left, state.last_middle - state.last_right) > 150) {  // > 0.15s
-      motor_speed(75);
+      motor_speed(85);
       delay(30);
     } else if (state.last_left > state.last_right) {
       // } else if (state.last_left > state.last_right && state.last_left - state.last_right > 0) {
       motor_direction(Direction::Backward);
-      motor_speed(Motor::Left, 80);
-      motor_speed(Motor::Right, 75);
+      motor_speed(Motor::Left, 90);
+      motor_speed(Motor::Right, 85);
       delay(35);
       motor_direction(Direction::Forward);
     } else if (state.last_left < state.last_right) {
       // } else if (state.last_left < state.last_right && state.last_right - state.last_left > 0) {
       motor_direction(Direction::Backward);
-      motor_speed(Motor::Left, 75);
-      motor_speed(Motor::Right, 80);
+      motor_speed(Motor::Left, 85);
+      motor_speed(Motor::Right, 90);
       delay(35);
       motor_direction(Direction::Forward);
     } else {
       motor_direction(Direction::Backward);
-      motor_speed(75);
+      motor_speed(85);
       delay(35);
       motor_direction(Direction::Forward);
     }
