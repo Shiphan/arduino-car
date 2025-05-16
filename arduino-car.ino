@@ -35,9 +35,9 @@ void setup() {
 }
 
 void loop() {
-  // test_simple_track();
-  avoid_near_stuff();
-  test_complex_track();
+  // task_simple_track();
+  task_avoid_near_stuff();
+  task_complex_track();
 }
 
 void task_one() {
@@ -91,7 +91,7 @@ typedef struct State {
 
 State state = State{ false, false, false, millis(), millis(), millis() };
 
-void test_simple_track() {
+void task_simple_track() {
   bool middle = sensor_is_black(Sensor::Middle);
   bool right = sensor_is_black(Sensor::Right);
   bool left = sensor_is_black(Sensor::Left);
@@ -170,7 +170,7 @@ void test_simple_track() {
   }
 }
 
-void test_complex_track() {
+void task_complex_track() {
   bool middle = sensor_is_black(Sensor::Middle);
   bool right = sensor_is_black(Sensor::Right);
   bool left = sensor_is_black(Sensor::Left);
@@ -271,7 +271,7 @@ void test_complex_track() {
   }
 }
 
-void avoid_near_stuff() {
+void task_avoid_near_stuff() {
   if (!is_near_cm(30)) {
     // motor_direction(Direction::Forward);
     // motor_speed(100);
