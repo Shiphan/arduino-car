@@ -272,17 +272,23 @@ void task_complex_track() {
 
 void task_avoid_near_stuff() {
   if (!is_near_cm(30)) {
-    // motor_direction(Direction::Forward);
-    // motor_speed(100);
     return;
   }
   digitalWrite(LED_BUILTIN, HIGH);
+  motor_speed(0);
+  delay(250);
   motor_speed(Motor::Left, 0);
-  motor_speed(Motor::Right, 100);
-  delay(280);
-  motor_speed(Motor::Left, 105);
-  motor_speed(Motor::Right, 80);
-  delay(1250);
+  motor_speed(Motor::Right, 120);
+  delay(340);
+  motor_speed(Motor::Left, 115);
+  motor_speed(Motor::Right, 90);
+  delay(650);
+  motor_speed(Motor::Left, 115);
+  motor_speed(Motor::Right, 0);
+  delay(200);
+  motor_speed(Motor::Left, 115);
+  motor_speed(Motor::Right, 85);
+  delay(300);
   digitalWrite(LED_BUILTIN, LOW);
 
   state.last_middle = millis();
