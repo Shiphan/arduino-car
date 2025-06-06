@@ -178,28 +178,25 @@ void task_complex_track() {
   if (middle) {
     if (left && !right) {
       motor_speed(Motor::Left, 0);
-      motor_speed(Motor::Right, 105);
-      delay(35);
+      motor_speed(Motor::Right, 100);
+      delay(30);
     } else if (!left && right) {
-      motor_speed(Motor::Left, 105);
+      motor_speed(Motor::Left, 100);
       motor_speed(Motor::Right, 0);
-      delay(35);
+      delay(30);
     } else if (!left && !right) {
       motor_speed(95);
-      delay(35);
+      delay(30);
     } else {  // all black
+      // this branch is unlikely to happen
       if (state.left && !state.right) {
-        motor_direction(Direction::Backward);
-        motor_speed(Motor::Left, 115);
-        motor_speed(Motor::Right, 85);
-        delay(30);
-        motor_direction(Direction::Forward);
+        motor_speed(Motor::Left, 90);
+        motor_speed(Motor::Right, 125);
+        delay(25);
       } else if (!state.left && state.right) {
-        motor_direction(Direction::Backward);
-        motor_speed(Motor::Left, 85);
-        motor_speed(Motor::Right, 115);
-        delay(30);
-        motor_direction(Direction::Forward);
+        motor_speed(Motor::Left, 125);
+        motor_speed(Motor::Right, 90);
+        delay(25);
       } else {
         motor_direction(Direction::Backward);
         motor_speed(95);
@@ -210,10 +207,10 @@ void task_complex_track() {
   } else if (left || right) {
     if (left && !right) {
       motor_speed(Motor::Left, 0);
-      motor_speed(Motor::Right, 95);
+      motor_speed(Motor::Right, 115);
       delay(35);
     } else if (!left && right) {
-      motor_speed(Motor::Left, 95);
+      motor_speed(Motor::Left, 115);
       motor_speed(Motor::Right, 0);
       delay(35);
     } else {
@@ -224,7 +221,7 @@ void task_complex_track() {
     }
   } else {
     if (state.last_middle > max(state.last_left, state.last_right) + 60) {
-      digitalWrite(LED_BUILTIN, HIGH);
+      // digitalWrite(LED_BUILTIN, HIGH);
       motor_speed(95);
       delay(15);
 
@@ -240,17 +237,17 @@ void task_complex_track() {
       //   motor_speed(Motor::Right, 85);
       //   delay(30);
       // }
-      digitalWrite(LED_BUILTIN, LOW);
+      // digitalWrite(LED_BUILTIN, LOW);
     } else if (state.last_left > state.last_right + 20) {
       motor_direction(Direction::Backward);
-      motor_speed(Motor::Left, 105);
+      motor_speed(Motor::Left, 120);
       motor_speed(Motor::Right, 85);
       delay(20);
       motor_direction(Direction::Forward);
     } else if (state.last_right > state.last_left + 20) {
       motor_direction(Direction::Backward);
       motor_speed(Motor::Left, 85);
-      motor_speed(Motor::Right, 105);
+      motor_speed(Motor::Right, 120);
       delay(20);
       motor_direction(Direction::Forward);
     } else {
