@@ -299,12 +299,16 @@ void task_avoid_near_stuff() {
   state.last_middle = millis();
 }
 
+unsigned long cm_to_microsecond(unsigned long distance) {
+  return distance * 1000 * 1000 / 100 / 350;
+}
+
 bool is_near_cm(unsigned long distance) {
   digitalWrite(SONAR_TRIGGER, HIGH);
   delayMicroseconds(20);
   digitalWrite(SONAR_TRIGGER, LOW);
-  unsigned long max_duration = distance * 2 * 1000 * 1000 / 100 / 350;
-  unsigned long pulse = pulseIn(SONAR_ECHO, HIGH, 5714);  // max: 1 m
+  unsigned long max_duration = cm_to_microsecond(distance) * 2;
+  unsigned long pulse = pulseIn(SONAR_ECHO, HIGH, cm_to_microsecond(100) * 2);  // max: 1 m
   return pulse != 0 && pulse < max_duration;
 }
 
