@@ -276,25 +276,50 @@ void task_complex_track() {
 }
 
 void task_avoid_near_stuff() {
-  if (!is_near_cm(30)) {
+  if (!is_near_cm(26) && !is_near_cm(26)) {
     return;
   }
-  digitalWrite(LED_BUILTIN, HIGH);
+
   motor_speed(0);
+  delay(300);
+
+  digitalWrite(LED_BUILTIN, HIGH);
+
+  motor_direction(Motor::Left, Direction::Backward);
+  while (is_near_cm(35)) {
+    motor_speed(100);
+    delay(20);
+    motor_speed(0);
+    delay(10);
+  }
+  motor_direction(Motor::Left, Direction::Forward);
+  motor_speed(0);
+  delay(300);
+
+  motor_direction(Motor::Left, Direction::Backward);
+  motor_speed(120);
   delay(250);
-  motor_speed(Motor::Left, 0);
-  motor_speed(Motor::Right, 120);
-  delay(340);
-  motor_speed(Motor::Left, 115);
-  motor_speed(Motor::Right, 90);
-  delay(650);
+  motor_direction(Motor::Left, Direction::Forward);
+
+  digitalWrite(LED_BUILTIN, LOW);
+
+  motor_speed(0);
+  delay(300);
+
+  motor_speed(110);
+  delay(800);
   motor_speed(Motor::Left, 115);
   motor_speed(Motor::Right, 0);
-  delay(200);
+  delay(110);
+  motor_speed(0);
+  delay(400);
+  motor_speed(95);
+  delay(360);
   motor_speed(Motor::Left, 115);
-  motor_speed(Motor::Right, 85);
-  delay(300);
-  digitalWrite(LED_BUILTIN, LOW);
+  motor_speed(Motor::Right, 0);
+  delay(120);
+  motor_speed(95);
+  delay(240);
 
   state.last_middle = millis();
 }
